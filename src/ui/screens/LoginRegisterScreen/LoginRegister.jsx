@@ -11,11 +11,12 @@ import React, { useState } from "react";
 import { useStateContext } from "../../../application/ContextProvider";
 import { IMAGES, COLORS } from "../../theme";
 import styles from "./LoginRegister.component.style";
-import { loginAsync } from "../../../services/api";
+import { loginAsync, registerAsync } from "../../../services/api";
 
 const Login = ({ registerPage = false }) => {
   const { setLoggedIn, user, setUser, registering, setRegistering, onboarded } =
     useStateContext();
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,16 +25,27 @@ const Login = ({ registerPage = false }) => {
       .then((response) => {
         const { user } = response;
         const token = response.jwt;
-        console.log("response", response);
-        console.log("token", token);
         setUser({ ...user, token });
         setLoggedIn(true);
       })
       .catch((error) => {
         alert("Error logging in: Invalid credentials");
-        console.log("error", error);
       });
   };
+
+  const handleRegister = (username, email, password) => {
+    registerAsync(username, email, password)
+      .then((response) => {
+        const { user } = response;
+        const token = response.jwt;
+        setUser({ ...user, token });
+        setRegistering(false);
+      })
+      .catch((error) => {
+        alert("Error registering: Invalid credentials");
+      });
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground source={IMAGES.blob} style={styles.blob} />
@@ -50,11 +62,11 @@ const Login = ({ registerPage = false }) => {
           placeholderTextColor={COLORS.grayLight}
           autoCapitalize="none"
           keyboardType="email-address"
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setUsername(text)}
         />
         {registerPage && (
           <>
-            <Text style={styles.label}>username</Text>
+            <Text style={styles.label}>email</Text>
             <TextInput
               style={styles.input}
               placeholder="yourmail@mail.com"
@@ -74,24 +86,29 @@ const Login = ({ registerPage = false }) => {
           autoCapitalize="none"
           secureTextEntry={true}
         />
-        <TouchableOpacity
-          style={{
-            alignSelf: "flex-end",
-            marginTop: -5,
-            marginRight: 5,
-            marginBottom: 25,
-          }}
-          onPress={() => {
-            alert("Forgot password");
-          }}
-        >
-          <Text style={styles.forgotPassword}>Forgot password?</Text>
-        </TouchableOpacity>
+        {!registerPage && (
+          <TouchableOpacity
+            style={{
+              alignSelf: "flex-end",
+              marginTop: -5,
+              marginRight: 5,
+            }}
+            onPress={() => {
+              alert("Forgot password");
+            }}
+          >
+            <Text style={styles.forgotPassword}>Forgot password?</Text>
+          </TouchableOpacity>
+        )}
+
+        <View style={{ marginBottom: 15 }} />
 
         <Button
-          text="Login"
+          text={registerPage ? "Register" : "Login"}
           onPress={() => {
-            handleLogin(email, password);
+            registerPage
+              ? handleRegister(username, email, password)
+              : handleLogin(username, password);
           }}
         />
         <TouchableOpacity

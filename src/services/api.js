@@ -1,6 +1,6 @@
 import axios from "axios";
 
-apiBaseUrl = "https://ciaochow.plusnarrative.biz/api/";
+apiBaseUrl = "https://ciaochow.plusnarrative.biz/";
 
 const api = axios.create({
   baseURL: apiBaseUrl,
@@ -24,7 +24,7 @@ const api = axios.create({
 
 const loginAsync = async (email, password) => {
   try {
-    const response = await api.post("auth/local", {
+    const response = await api.post("api/auth/local", {
       identifier: email,
       password,
     });
@@ -37,13 +37,13 @@ const loginAsync = async (email, password) => {
 
 const registerAsync = async (username, email, password) => {
   try {
-    const response = await api.post("/auth/local/register", {
+    const response = await api.post("api/auth/local/register", {
       username,
       email,
       password,
     });
-    const { token } = response.data;
-    await AsyncStorage.setItem("token", token);
+    // const { token } = response.data;
+    // await AsyncStorage.setItem("token", token);
 
     return response.data;
   } catch (error) {

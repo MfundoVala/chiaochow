@@ -4,6 +4,7 @@ import onboarding1 from "../assets/onboarding1.png";
 import blob from "../assets/blob.png";
 import girl from "../assets/girl.png";
 import boy from "../assets/boy.png";
+import defaultImg from "../assets/defaultImg.png";
 
 const COLORS = {
   primary: "#4CAD73",
@@ -23,9 +24,9 @@ const FONTS = {
     lineHeight: 16.94,
     letterSpacing: 0.37,
   },
-  h1: { fontSize: 24, fontWeight: 400, lineHeight: 18 },
+  h1: { fontSize: 24, fontWeight: 600, lineHeight: 41 },
   h2: { fontSize: 14, fontWeight: 400, lineHeight: 24 },
-  h3: { fontSize: 12, fontWeight: 400, lineHeight: 13 },
+  h3: { fontSize: 13, fontWeight: 400, lineHeight: 13 },
   h4: { fontSize: 10, fontWeight: 400, lineHeight: 18 },
 };
 
@@ -53,6 +54,7 @@ const IMAGES = {
   blob,
   girl,
   boy,
+  defaultImg,
 };
 
 export { COLORS, FONTS, IMAGES, SHADOW, SHADOW_SMALL };
