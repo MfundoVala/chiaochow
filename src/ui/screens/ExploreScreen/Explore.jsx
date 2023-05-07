@@ -9,6 +9,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const { width, height } = Dimensions.get("window");
 // import { mockData } from "../../../services/mock";
 import { getChowsAsync, processApiData } from "../../../services/api";
+import { SimpleAnimation } from "react-native-simple-animations";
 
 const Explore = () => {
   const { user } = useStateContext();
@@ -79,86 +80,98 @@ const FlatlistPageComponent = ({ data, scroll }) => {
   return (
     <View style={styles.container}>
       <ImageSlider chowData={data} />
-      <Animated.View style={styles.bottomContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{data.title}</Text>
-          <TouchableOpacity
-            style={styles.favouriteIconContainer}
-            onPress={() => setFavourited(!favourited)}
-          >
-            <Image
-              source={favourited ? IMAGES.favourited : IMAGES.notFavourited}
-              style={styles.favouriteIcon}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.tabsContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              setActiveTab("description");
-              handleTabChange(0);
-            }}
-          >
-            <Text
-              style={
-                activeTab === "description"
-                  ? styles.tabTextActive
-                  : styles.tabText
-              }
+      <SimpleAnimation
+        aim="in"
+        animate={true}
+        delay={1500}
+        duration={1000}
+        movementType="slide"
+        direction="up"
+        distance={700}
+        style={styles.bottomNavContainer}
+      >
+        <Animated.View style={styles.bottomContainer}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{data.title}</Text>
+            <TouchableOpacity
+              style={styles.favouriteIconContainer}
+              onPress={() => setFavourited(!favourited)}
             >
-              Description
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setActiveTab("nutrition");
-              handleTabChange(170);
-            }}
-          >
-            <Text
-              style={
-                activeTab === "nutrition"
-                  ? styles.tabTextActive
-                  : styles.tabText
-              }
+              <Image
+                source={favourited ? IMAGES.favourited : IMAGES.notFavourited}
+                style={styles.favouriteIcon}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.tabsContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                setActiveTab("description");
+                handleTabChange(0);
+              }}
             >
-              Nutrition Facts
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={
+                  activeTab === "description"
+                    ? styles.tabTextActive
+                    : styles.tabText
+                }
+              >
+                Description
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setActiveTab("nutrition");
+                handleTabChange(170);
+              }}
+            >
+              <Text
+                style={
+                  activeTab === "nutrition"
+                    ? styles.tabTextActive
+                    : styles.tabText
+                }
+              >
+                Nutrition Facts
+              </Text>
+            </TouchableOpacity>
 
-          <Animated.View
-            style={{
-              ...styles.tabIndicator,
-              transform: [
-                {
-                  translateX: translateX.interpolate({
-                    inputRange: [0, 100],
-                    outputRange: [0, 100],
-                  }),
-                },
-              ],
-            }}
-            ref={translateX}
-          />
-        </View>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.description}>
-            {activeTab == "description" ? data.description : "LOREM IPSUM"}
-          </Text>
-        </View>
-        <View style={styles.bottomNavContainer}>
-          <Button
-            text="Nah! Find something else."
-            onPress={() => {
-              if (data.id == 1) {
-                scroll({ index: 1 });
-              } else {
-                scroll({ index: -1 });
-              }
-            }}
-          />
-        </View>
-      </Animated.View>
+            <Animated.View
+              style={{
+                ...styles.tabIndicator,
+                transform: [
+                  {
+                    translateX: translateX.interpolate({
+                      inputRange: [0, 100],
+                      outputRange: [0, 100],
+                    }),
+                  },
+                ],
+              }}
+              ref={translateX}
+            />
+          </View>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.description}>
+              {activeTab == "description" ? data.description : "LOREM IPSUM"}
+            </Text>
+          </View>
+
+          <View style={styles.bottomNavContainer}>
+            <Button
+              text="Nah! Find something else."
+              onPress={() => {
+                if (data.id == 1) {
+                  scroll({ index: 1 });
+                } else {
+                  scroll({ index: -1 });
+                }
+              }}
+            />
+          </View>
+        </Animated.View>
+      </SimpleAnimation>
     </View>
   );
 };

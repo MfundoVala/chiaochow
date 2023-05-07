@@ -20,12 +20,16 @@ export default StyleSheet.create({
     marginTop: -20,
   },
 
-  icon: {
-    width: 130,
-    height: 300,
+  iconContainer: {
     position: "absolute",
     top: 80,
     right: 40,
+  },
+
+  icon: {
+    width: 130,
+    height: 300,
+    position: "relative",
   },
 
   heading: {

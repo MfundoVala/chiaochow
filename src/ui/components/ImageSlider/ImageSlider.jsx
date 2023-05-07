@@ -18,13 +18,14 @@ const ImageSlider = ({ chowData }) => {
         style={styles.swiper}
         scrollEnabled={true}
         index={currentIndex}
+        showsPagination={false}
         onIndexChanged={(index) => setCurrentIndex(index)}
       >
         {chowImages.map((image, index) => {
           console.log(image.url);
           return (
             <Image
-              key={index + 1}
+              key={index}
               source={{ uri: image.url }}
               style={styles.image}
             />

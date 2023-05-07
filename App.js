@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { Text } from "react-native";
+import { Text, View, Dimensions } from "react-native";
 import {
   ContextProvider,
   useStateContext,
@@ -10,9 +10,11 @@ import ExploreScreen from "./src/ui/screens/ExploreScreen/Explore";
 import * as Font from "expo-font";
 import React, { useState } from "react";
 import { useFonts } from "expo-font";
+import { COLORS } from "./src/ui/theme";
 
 function App() {
   const { onboarded, loggedIn, registering } = useStateContext();
+  const { width, height } = Dimensions.get("window");
   const [loaded] = useFonts({
     Inter: require("./src/assets/fonts/Inter-Regular.otf"),
     InterMedium: require("./src/assets/fonts/Inter-Medium.otf"),
@@ -22,7 +24,7 @@ function App() {
     return <Text>Loading...</Text>;
   }
   return (
-    <>
+    <View style={{ width, height, backgroundColor: COLORS.primary }}>
       <StatusBar style="auto" />
       {!onboarded && <OnboardingScreen />}
       {onboarded && !loggedIn && !registering && <LoginRegisterScreen />}
@@ -30,7 +32,7 @@ function App() {
         <LoginRegisterScreen registerPage={true} />
       )}
       {loggedIn && <ExploreScreen />}
-    </>
+    </View>
   );
 }
 
