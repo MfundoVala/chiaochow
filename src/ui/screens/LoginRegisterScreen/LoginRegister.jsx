@@ -5,6 +5,8 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
 import Button from "../../components/Button/Button";
 import React, { useState } from "react";
@@ -19,6 +21,8 @@ const Login = ({ registerPage = false }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const { width, height } = Dimensions.get("window");
 
   const handleLogin = (email, password) => {
     loginAsync(email, password)
@@ -26,6 +30,7 @@ const Login = ({ registerPage = false }) => {
         const { user } = response;
         const token = response.jwt;
         setUser({ ...user, token });
+
         setLoggedIn(true);
       })
       .catch((error) => {
@@ -47,7 +52,7 @@ const Login = ({ registerPage = false }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <ImageBackground source={IMAGES.blob} style={styles.blob} />
       <Image
         source={registerPage ? IMAGES.girl : IMAGES.boy}
@@ -78,20 +83,36 @@ const Login = ({ registerPage = false }) => {
           </>
         )}
         <Text style={styles.label}>password</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="your password"
-          placeholderTextColor={COLORS.grayLight}
-          onChangeText={(text) => setPassword(text)}
-          autoCapitalize="none"
-          secureTextEntry={true}
-        />
+        <View style={{ width: 335, alignSelf: "center" }}>
+          <TextInput
+            style={styles.input}
+            placeholder="your password"
+            placeholderTextColor={COLORS.grayLight}
+            onChangeText={(text) => setPassword(text)}
+            autoCapitalize="none"
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity
+            style={{
+              alignSelf: "flex-end",
+              position: "absolute",
+            }}
+            onPress={() => {
+              setShowPassword(!showPassword);
+            }}
+          >
+            <Image
+              source={!showPassword ? IMAGES.showPassword : IMAGES.hidePassword}
+              style={styles.showPasswordIcon}
+            />
+          </TouchableOpacity>
+        </View>
         {!registerPage && (
           <TouchableOpacity
             style={{
               alignSelf: "flex-end",
               marginTop: -5,
-              marginRight: 5,
+              marginRight: width / 25,
             }}
             onPress={() => {
               alert("Forgot password");
@@ -106,6 +127,7 @@ const Login = ({ registerPage = false }) => {
         <Button
           text={registerPage ? "Register" : "Login"}
           onPress={() => {
+            setShowPassword(false);
             registerPage
               ? handleRegister(username, email, password)
               : handleLogin(username, password);
@@ -128,7 +150,7 @@ const Login = ({ registerPage = false }) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

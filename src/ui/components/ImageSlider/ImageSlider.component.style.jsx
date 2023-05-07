@@ -1,23 +1,23 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { COLORS, FONTS } from "../../theme";
-
+const { width, height } = Dimensions.get("window");
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    height: "45%",
+    width,
+    height: height * 0.43,
     position: "absolute",
     top: 0,
   },
 
   swiper: {
-    flex: 1,
+    zIndex: 999,
   },
 
   image: {
     flex: 1,
     resizeMode: "cover",
-    width: "100%",
+    width,
   },
 
   pagination: {
@@ -34,7 +34,7 @@ export default styles = StyleSheet.create({
     height: 8,
     borderRadius: 5,
     marginHorizontal: 3,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: COLORS.gray,
   },
 
   activeDot: {
@@ -57,7 +57,7 @@ export default styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     left: 0,
-    height: 180,
-    width: "100%",
+    height: 200,
+    width,
   },
 });

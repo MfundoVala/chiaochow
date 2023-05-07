@@ -5,9 +5,18 @@ export const mockData = [
     description:
       "Ciao Chow is a food delivery app that allows users to order food from local restaurants.",
     images: [
-      "https://ciaochow.plusnarrative.biz/uploads/large_carrots_f0e8e6217a.jpeg",
-      "https://ciaochow.plusnarrative.biz/uploads/large_carrots_3_60f5a864c1.jpeg",
-      "https://ciaochow.plusnarrative.biz/uploads/large_carrots_2_0a682e61c9.jpeg",
+      {
+        id: 1,
+        url: "https://ciaochow.plusnarrative.biz/uploads/large_carrots_f0e8e6217a.jpeg",
+      }
+      {
+        id: 2,
+        url: "https://ciaochow.plusnarrative.biz/uploads/large_carrots_2_0a682e61c9.jpeg",
+      }
+      {
+        id: 3,
+        url: "https://ciaochow.plusnarrative.biz/uploads/large_carrots_2_0a682e61c9.jpeg",
+      }
     ],
   },
   {
@@ -16,9 +25,18 @@ export const mockData = [
     description:
       "Ciao Chow is a food delivery app that allows users to order food from local restaurants.",
     images: [
-      "https://picsum.photos/200",
-      "https://picsum.photos/200",
-      "https://picsum.photos/200",
+      {
+        id: 1,
+        url:"https://picsum.photos/200",
+      },
+      {
+        id: 2,
+        url:"https://picsum.photos/200",
+      },
+      {
+        id: 3,
+        url:"https://picsum.photos/200",
+      }
     ],
   },
 ];

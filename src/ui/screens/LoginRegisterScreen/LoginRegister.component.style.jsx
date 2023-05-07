@@ -1,9 +1,10 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { COLORS, FONTS } from "../../theme";
+const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   container: {
-    width: "100%",
+    width: width,
     height: "100%",
     backgroundColor: "#fff",
     alignItems: "center",
@@ -16,14 +17,14 @@ export default StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    marginTop: -30,
+    marginTop: -20,
   },
 
   icon: {
     width: 130,
     height: 300,
     position: "absolute",
-    top: 100,
+    top: 80,
     right: 40,
   },
 
@@ -37,18 +38,21 @@ export default StyleSheet.create({
   },
 
   form: {
-    width: "100%",
-    height: "50%",
+    width: width,
+    height: height / 2,
     padding: 25,
     justifyContent: "center",
     alignItems: "flex-start",
     position: "absolute",
     bottom: 40,
+    backgroundColor: COLORS.white,
+    zIndex: 9999,
   },
 
   label: {
     ...FONTS.h2,
     marginBottom: 5,
+    marginLeft: width / 25,
   },
 
   input: {
@@ -59,6 +63,8 @@ export default StyleSheet.create({
     paddingLeft: 20,
     marginBottom: 15,
     color: COLORS.black,
+    fontFamily: "Inter",
+    alignSelf: "center",
   },
 
   forgotPassword: {
@@ -69,5 +75,12 @@ export default StyleSheet.create({
   registerText: {
     color: COLORS.secondary,
     ...FONTS.h3,
+  },
+
+  showPasswordIcon: {
+    width: 25,
+    height: 18,
+    marginTop: 15,
+    marginRight: 20,
   },
 });

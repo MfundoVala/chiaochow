@@ -16,15 +16,16 @@ const ImageSlider = ({ chowData }) => {
     <View style={styles.container}>
       <Swiper
         style={styles.swiper}
-        showsPagination={false}
+        scrollEnabled={true}
         index={currentIndex}
         onIndexChanged={(index) => setCurrentIndex(index)}
       >
         {chowImages.map((image, index) => {
+          console.log(image.url);
           return (
             <Image
               key={index + 1}
-              source={{ uri: image }}
+              source={{ uri: image.url }}
               style={styles.image}
             />
           );
@@ -33,7 +34,7 @@ const ImageSlider = ({ chowData }) => {
       <Text style={styles.chowTitle}></Text>
       <View style={styles.bottomOverlay}>
         <LinearGradient
-          colors={["#00000000", COLORS.black]}
+          colors={["#00000000", "#000"]}
           style={styles.bottomOverlay}
         />
       </View>

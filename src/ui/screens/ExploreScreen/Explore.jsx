@@ -1,16 +1,73 @@
-import { View, Text, Dimensions, Animated } from "react-native";
-import React from "react";
+import { View, Text, Dimensions, Animated, Image } from "react-native";
+import React, { useEffect } from "react";
 import { useStateContext } from "../../../application/ContextProvider";
 import styles from "./Explore.component.style";
-import { mockData } from "../../../services/mock";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
+import { IMAGES, COLORS } from "../../theme";
 import Button from "../../components/Button/Button";
 import { TouchableOpacity } from "react-native-gesture-handler";
 const { width, height } = Dimensions.get("window");
+// import { mockData } from "../../../services/mock";
+import { getChowsAsync, processApiData } from "../../../services/api";
 
-const DetailsComponent = ({ data, index, scroll }) => {
+const Explore = () => {
+  const { user } = useStateContext();
+  const [chowData, setChowData] = React.useState([]);
+
+  const flatlistRef = React.useRef(null);
+  const handleScroll = ({ index }) => {
+    flatlistRef.current.scrollToOffset({
+      offset: index * width,
+      animated: true,
+    });
+  };
+
+  useEffect(() => {
+    console.log("user", user);
+    getChowsAsync({ token: user.token })
+      .then((response) => {
+        const chowData = processApiData(response);
+        setChowData(chowData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  if (!chowData) {
+    return <Text>Loading...</Text>;
+  }
+  return (
+    <View style={{ width, height }}>
+      <Animated.FlatList
+        data={chowData}
+        keyExtractor={(item) => item.id}
+        horizontal
+        pagingEnabled={false}
+        scrollEnabled={false}
+        showsHorizontalScrollIndicator={false}
+        bounces={false}
+        ref={flatlistRef}
+        renderItem={({ item, index }) => {
+          return (
+            <FlatlistPageComponent
+              data={item}
+              key={item.id}
+              index={1}
+              scroll={handleScroll}
+            />
+          );
+        }}
+      />
+    </View>
+  );
+};
+
+const FlatlistPageComponent = ({ data, scroll }) => {
   const [activeTab, setActiveTab] = React.useState("description");
   const translateX = React.useRef(new Animated.Value(0)).current;
+  const [favourited, setFavourited] = React.useState(false);
+
   const handleTabChange = (value) => {
     Animated.timing(translateX, {
       toValue: value,
@@ -25,6 +82,15 @@ const DetailsComponent = ({ data, index, scroll }) => {
       <Animated.View style={styles.bottomContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{data.title}</Text>
+          <TouchableOpacity
+            style={styles.favouriteIconContainer}
+            onPress={() => setFavourited(!favourited)}
+          >
+            <Image
+              source={favourited ? IMAGES.favourited : IMAGES.notFavourited}
+              style={styles.favouriteIcon}
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.tabsContainer}>
           <TouchableOpacity
@@ -93,42 +159,6 @@ const DetailsComponent = ({ data, index, scroll }) => {
           />
         </View>
       </Animated.View>
-    </View>
-  );
-};
-
-const Explore = () => {
-  const { setLoggedIn } = useStateContext();
-  const flatlistRef = React.useRef(null);
-  const handleScroll = ({ index }) => {
-    flatlistRef.current.scrollToOffset({
-      offset: index * width,
-      animated: true,
-    });
-  };
-
-  return (
-    <View style={{ width, height }}>
-      <Animated.FlatList
-        data={mockData}
-        keyExtractor={(item) => item.id}
-        horizontal
-        pagingEnabled={false}
-        scrollEnabled={false}
-        showsHorizontalScrollIndicator={false}
-        bounces={false}
-        ref={flatlistRef}
-        renderItem={({ item, index }) => {
-          return (
-            <DetailsComponent
-              data={item}
-              key={item.id}
-              index={1}
-              scroll={handleScroll}
-            />
-          );
-        }}
-      />
     </View>
   );
 };

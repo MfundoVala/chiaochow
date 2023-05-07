@@ -14,6 +14,7 @@ export const ContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [onboarded, setOnboarded] = useState(false);
   const [registering, setRegistering] = useState(false);
+  const [chows, setChows] = useState([]);
 
   return (
     <stateContext.Provider
@@ -30,6 +31,8 @@ export const ContextProvider = ({ children }) => {
         setOnboarded,
         registering,
         setRegistering,
+        chows,
+        setChows,
       }}
     >
       {children}

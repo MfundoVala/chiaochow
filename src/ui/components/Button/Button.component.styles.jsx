@@ -29,6 +29,6 @@ export default StyleSheet.create({
   buttonText: {
     color: COLORS.white,
     ...FONTS.btn,
-    fontWeight: 500,
+    fontFamily: "InterMedium",
   },
 });

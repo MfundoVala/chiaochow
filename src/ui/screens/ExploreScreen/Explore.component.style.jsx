@@ -82,11 +82,29 @@ export default StyleSheet.create({
     width: width,
     paddingHorizontal: 25,
     marginTop: 30,
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
   title: {
     ...FONTS.h1,
     color: COLORS.black,
   },
+
+  favouriteIconContainer: {
+    width: 31,
+    height: 31,
+    backgroundColor: "#000000",
+    borderRadius: 10,
+    opacity: 0.56,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  favouriteIcon: {
+    width: 15,
+    height: 13,
+  },
+
   description: {
     ...FONTS.h3,
     color: COLORS.gray,

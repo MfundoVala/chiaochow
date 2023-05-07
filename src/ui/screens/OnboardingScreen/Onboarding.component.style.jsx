@@ -24,6 +24,11 @@ export default StyleSheet.create({
     height: 290,
     marginTop: 200,
   },
+  iconSingle: {
+    width: 100,
+    height: 250,
+    marginTop: 200,
+  },
 
   logo: {
     width: 170,
@@ -51,9 +56,11 @@ export default StyleSheet.create({
     color: COLORS.white,
     lineHeight: 30,
     fontWeight: 400,
+    fontFamily: "Inter",
   },
   titleBold: {
     fontWeight: 700,
+    fontFamily: "InterBold",
   },
   buttonBox: {
     width: "100%",
